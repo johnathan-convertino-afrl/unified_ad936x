@@ -135,7 +135,6 @@ module system_wrapper #(
     inout                   fixed_io_ps_srstb,
     inout                   iic_scl,
     inout                   iic_sda,
-    inout       [31:0]      gpio_bd,
     input                   otg_vbusoc,
     input                   rx_clk_in,
     input                   rx_frame_in,
@@ -228,17 +227,17 @@ module system_wrapper #(
   // instantiations... copy pasta
   // REMOVED GPIO_SYNC JUST AFTER RESETB... RESETB MUST BE -1 IN DEVICE TREE GPIO PIN
   ad_iobuf #(.DATA_WIDTH(49)) i_iobuf_gpio (
-    .dio_t ({gpio_t[50:49], gpio_t[43:0]}),
-    .dio_i ({gpio_o[50:49], gpio_o[43:0]}),
-    .dio_o ({gpio_i[50:49], gpio_i[43:0]}),
+    .dio_t ({gpio_t[50:49], gpio_t[43:32]}),
+    .dio_i ({gpio_o[50:49], gpio_o[43:32]}),
+    .dio_o ({gpio_i[50:49], gpio_i[43:32]}),
     .dio_p ({ gpio_resetb,
               gpio_en_agc,
               gpio_ctl,
-              gpio_status,
-              gpio_bd}));
+              gpio_status}));
 
   assign gpio_i[63:51] = gpio_o[63:51];
   assign gpio_i[48:44] = gpio_o[48:44];
+  assign gpio_i[31:0]  = gpio_o[31:0];
 
 
   // Group: Instantianted Modules
