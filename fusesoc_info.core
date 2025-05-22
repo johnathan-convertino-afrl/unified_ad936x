@@ -24,6 +24,23 @@ filesets:
   adrv9361-z7035_fmc_bootgen:
     depend:
       - AFRL:utility:ad_adrv9361-z7035_boot_gen:1.0.0
+      
+  pluto:
+    files:
+      - pluto/system_constr.xdc : {file_type : xdc}
+      - pluto/system_wrapper.v : {file_type : verilogSource}
+      - pluto/system_pl_wrapper.v : {file_type : verilogSource}
+      - pluto/system_pl_gen.tcl : {file_type : tclSource}
+      - pluto/system_gen.tcl : {file_type : tclSource}
+      - pluto/ad9363_pl_wrapper.v : {file_type : verilogSource}
+    depend:
+      - AFRL:utility:pluto_board_base:1.0.0
+      - AFRL:utility:vivado_board_support_packages
+      - AD:common:ad_iobuf:1.0.0
+
+  pluto_bootgen:
+    depend:
+      - AFRL:utility:pluto_boot_gen:1.0.0
 
   dep:
     depend:
@@ -60,3 +77,18 @@ targets:
     <<: *adrv9361-z7035_fmc
     description: adrv9361-z7035_fmc build with boot.bin output in BOOTFS folder.
     filesets_append : [adrv9361-z7035_fmc_bootgen]
+    
+  pluto: &pluto
+    <<: *default
+    default_tool: vivado
+    description: Pluto target.
+    filesets_append : ["tool_vivado ? (pluto)"]
+    tools:
+      vivado:
+        source_mgmt_mode: DisplayOnly
+        part: xc7z010clg225-1
+
+  pluto_fmc_bootgen:
+    <<: *pluto
+    description: Pluto build with boot.bin output in BOOTFS folder.
+    filesets_append : [pluto_bootgen]
