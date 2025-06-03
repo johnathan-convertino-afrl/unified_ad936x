@@ -261,7 +261,7 @@ module system_wrapper #(
   assign ad9517_csn = s_spi_csn[1];
   assign ad9517_clk = s_spi_clk;
   assign ad9517_mosi = s_spi_mosi;
-  assign spi_miso_s = (~s_spi_csn[0] & spi_miso) | (~s_spi_csn[1] & ad9517_miso);
+  assign s_spi_miso = (~s_spi_csn[0] & spi_miso) | (~s_spi_csn[1] & ad9517_miso);
   
   // instantiations... copy pasta
   
