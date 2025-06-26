@@ -1,5 +1,6 @@
 # Unified AD936X FPGA Project
 ### Contains core files and scripts to generate a AD936X platform using fusesoc.
+---
 
 ![image](docs/manual/img/AFRL.png)
 
